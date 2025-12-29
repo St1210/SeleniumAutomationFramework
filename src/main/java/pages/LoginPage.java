@@ -1,7 +1,9 @@
 package pages;
 
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.PageFactory;
 
 import utils.LoggerUtil;
 
@@ -9,35 +11,50 @@ public class LoginPage {
 	
 	private WebDriver driver;
 	
-    private By emailField = By.xpath("//input[@type='email']");
-    private By passwordField = By.xpath("//input[@type='password']");
-    private By loginButton = By.xpath("//button[@type='submit']");
+	//locators using page factory method
+	
+	@FindBy(xpath="//input[@type='email']")
+	WebElement emailField;
+	
+	@FindBy(xpath="//input[@type='password']")
+	WebElement passwordField;
+	
+	@FindBy(xpath="//button[@type='submit']")
+	WebElement loginButton;
+	
+	@FindBy(id="RememberMe")
+	WebElement rememberMeCheckbox;
+	
+	
+    //private By emailField = By.xpath("//input[@type='email']");
+    //private By passwordField = By.xpath("//input[@type='password']");
+    //private By loginButton = By.xpath("//button[@type='submit']");
 	
     public LoginPage(WebDriver driver) {
 		this.driver = driver;
+		PageFactory.initElements(driver, this);
 	}
     
     public void enterEmail(String email) {
     	
     	LoggerUtil.info("Entering email: " + email);
-		driver.findElement(emailField).clear();
-		driver.findElement(emailField).sendKeys(email);
+		emailField.clear();
+		emailField.sendKeys(email);
 		 
 	}
 
 	public void enterPassword(String password) {
 		
 		LoggerUtil.info("Entering password.");
-		driver.findElement(passwordField).clear();
-		driver.findElement(passwordField).sendKeys(password);
+		passwordField.clear();
+		passwordField.sendKeys(password);
 	}
 
 	public void checkRememberMe() {
 		
 		LoggerUtil.info("Checking the 'Remember Me' checkbox.");
-		By rememberMeCheckbox = By.id("RememberMe");
-		if (!driver.findElement(rememberMeCheckbox).isSelected()) {
-			driver.findElement(rememberMeCheckbox).click();
+		if (!rememberMeCheckbox.isSelected()) {
+			rememberMeCheckbox.click();
 		}
 		
 	}
@@ -45,7 +62,13 @@ public class LoginPage {
 	public void clickLogin() {
 		
 		LoggerUtil.info("Clicking the login button.");
-		driver.findElement(loginButton).click();
+		loginButton.click();
+	}
+
+	public String getloginErrorMessage() {
+		
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

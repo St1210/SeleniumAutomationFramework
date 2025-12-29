@@ -61,12 +61,14 @@ public class ExtentReportManager {
 			System.out.println("Screenshot path: " + path);
 			
 			FileUtils.copyFile(src, new File(path));
+			return path;
 			
 		} catch (Exception e) {
 			e.printStackTrace();
+			return null;
 		}
 	
 		
-		return null;
+	
 	}
 }
